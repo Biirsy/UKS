@@ -1,6 +1,6 @@
 <?php
 
-// app/Http/Controllers/PasienController.php
+
 namespace App\Http\Controllers;
 
 use App\Models\Pasien;
@@ -12,19 +12,27 @@ use Illuminate\Http\Request;
 class PasienController extends Controller
 {
     public function index(Request $request) {
+    $query = Pasien::query();
 
-        if($request){
-        $obats = Obat::where('nama_obat', 'like', '%'.$request->search.'%')->get();
-        $pasiens = Pasien::where('nama', 'like', '%'.$request->search.'%')->get();
-        }else{
-        $obats = Obat::get();
-        $pasiens = Pasien::get();
-        $keterangans = Keterangan::get();
-        $kelas = Kelas::get();
-        }
-
-        return view('pasiens.index', compact('pasiens', 'obats'));
+    if ($request->kelas) {
+        $query->where('kelas_id', $request->kelas);
     }
+
+    if ($request->tanggal_berkunjung) {
+        $query->where('tanggal_berkunjung', '=', $request->tanggal_berkunjung);
+    }
+
+    if ($request->search) {
+        $query->where('nama', 'like', '%' . $request->search . '%');
+    }
+
+    $pasiens = $query->get();
+    $obats = Obat::get();
+    $kelas = Kelas::get();
+    $keterangans = Keterangan::get();
+
+    return view('pasiens.index', compact('pasiens', 'obats', 'kelas', 'keterangans'));
+}
 
     public function create(){
         return view('pasiens.create', [
@@ -51,6 +59,17 @@ class PasienController extends Controller
         'keterangan_id.required' => 'Kolom Keterangan Tidak Boleh Kosong',
         'tanggal_berkunjung.required' => 'Kolom Tanggal Tidak Boleh Kosong',
     ]);
+
+    $obats = Obat::find($request->obat_id);
+
+    if ($obats) {
+        if ($obats->stok > 0) {
+            $obats->stok -= 1;
+            $obats->save();
+        } else {
+            return redirect()->back()->withErrors(['error' => 'Stok obat tidak mencukupi.']);
+        }
+    }
 
     $pasiens = new Pasien();
 
