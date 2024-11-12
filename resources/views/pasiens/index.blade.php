@@ -136,6 +136,12 @@
                     @endforeach
                 </tbody>
             </table>
+
+            <div class="mt-4">
+                {{ $pasiens->links('vendor.pagination.custom') }}
+            </div>
+
+
         </div>
     </div>
 

@@ -26,7 +26,7 @@ class PasienController extends Controller
         $query->where('nama', 'like', '%' . $request->search . '%');
     }
 
-    $pasiens = $query->get();
+    $pasiens = $query->paginate(3);
     $obats = Obat::get();
     $kelas = Kelas::get();
     $keterangans = Keterangan::get();
