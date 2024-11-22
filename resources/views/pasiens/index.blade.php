@@ -85,7 +85,7 @@
     <!-- Tabel -->
     <table class="w-full border text-sm bg-white rounded-lg shadow">
         <thead>
-            <tr class="bg-gray-100 text-left text-gray-600 font-semibold">
+            <tr class="bg-gray-100 text-left text-gray-600 font-medium">
                 <th class="px-6 py-3">Nama Pasien</th>
                 <th class="px-6 py-3">Kelas</th>
                 <th class="px-6 py-3">Keluhan</th>
@@ -119,6 +119,11 @@
         </tbody>
     </table>
 </div>
+
+<div class="mt-4">
+        {{ $pasiens->links('vendor.pagination.custom') }}
+    </div>
+
 
 @endsection
     <script>

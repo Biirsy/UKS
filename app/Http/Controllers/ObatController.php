@@ -19,7 +19,7 @@ class ObatController extends Controller
         $query->where('nama_obat', 'like', '%' . $request->search . '%');
     }
 
-    $obats = $query->paginate(2);
+    $obats = $query->paginate(7);
 
     return view('obats.index', compact('obats'));
     }

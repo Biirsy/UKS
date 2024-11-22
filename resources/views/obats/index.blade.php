@@ -79,9 +79,9 @@
 
     <!-- Table -->
     <div class="table-container overflow-x-auto mt-5">
-        <table class="w-full border  text-sm bg-white rounded-lg shadow">
+        <table class="w-full border text-sm bg-white rounded-lg shadow">
             <thead>
-                <tr class="bg-gray-100 text-left text-gray-600 font-semibold">
+                    <tr class="bg-gray-100 text-left text-slate-500 font-medium">
                     <th class="px-6 py-3">Nama Obat</th>
                     <th class="px-6 py-3">Kegunaan</th>
                     <th class="px-6 py-3">Stok</th>

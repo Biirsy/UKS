@@ -1,7 +1,7 @@
 @extends('template.default')
 
 @section('content')
-<div class="max-w-2xl mx-auto mt-5 bg-white shadow-md rounded-lg">
+<div class="mt-5 bg-white shadow-md rounded-lg">
     <div class="p-6">
         <form action="{{ route('pasien.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
