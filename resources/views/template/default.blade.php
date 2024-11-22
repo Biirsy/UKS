@@ -44,23 +44,20 @@
             <div class="page-body container">
                 <div class="flex flex-col">
                     @if (session('success'))
-<div id="successMessage" class="session-message bg-green-600 text-white py-2 px-2 rounded w-28 h-12  flex items-center justify-center">
-    {{ session('success') }}
-</div>
-@endif
-
-@if (session('info'))
-<div id="infoMessage" class="session-message bg-blue-600 text-white py-2 px-2 rounded w-60 h-12 flex items-center justify-center">
-    {{ session('info') }}
-</div>
-@endif
-
-@if (session('danger'))
-<div id="dangerMessage" class="session-message bg-red-600 text-white py-2 px-2 rounded w-28 h-12 flex items-center justify-center">
-    {{ session('danger') }}
-</div>
-@endif
-
+                        <div id="successMessage" class="session-message bg-green-600 text-white py-2 px-2 rounded w-60 h-12  flex items-center justify-center">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if (session('info'))
+                        <div id="infoMessage" class="session-message bg-blue-600 text-white py-2 px-2 rounded w-60 h-12 flex items-center justify-center">
+                            {{ session('info') }}
+                        </div>
+                    @endif
+                    @if (session('danger'))
+                        <div id="dangerMessage" class="session-message bg-red-600 text-white py-2 px-2 rounded w-60 h-12 flex items-center justify-center">
+                            {{ session('danger') }}
+                        </div>
+                    @endif
                     @yield('content')
                 </div>
             </div>
