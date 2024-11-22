@@ -1,6 +1,6 @@
 <div x-data="{ isSidebarOpen: false }">
     <aside 
-        class="fixed top-0 left-0 z-40 h-screen w-64 bg-white border-r border-gray-200 transition-transform duration-300 ease-in-out lg:translate-x-0"
+        class="fixed top-0 left-0 z-40 h-screen w-56 bg-white border-r border-gray-200 transition-transform duration-300 ease-in-out lg:translate-x-0"
         :class="isSidebarOpen ? 'translate-x-0' : '-translate-x-full'"
     >
         <div class="flex flex-col h-full">

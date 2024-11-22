@@ -5,30 +5,32 @@
 </head>
 <body>
     <div class="flex">
-    @include('template.partial.sidebar')
+        @include('template.partial.sidebar')
     </div>
 
     <div class="flex-1 lg:ml-64">
-        <div class="page-wrapper">
-            <div class="page-header">
-                <div class="container mt-[2.5rem] ml-[2rem]">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <div class="text-xl text-slate-800 font-semibold">
-                                {{ $preTitle ?? '' }}
-                            </div>
-                        </div>
-                        <div class="flex items-center mr-[2.5rem]">
-                            @stack('page-actions')
-                        </div>
+        <!-- Wrapper -->
+        <div class="page-wrapper px-5 pt-5 pb-5"> <!-- Padding untuk jarak antar elemen -->
+            <!-- Header -->
+            <div class="page-header mb-5">
+                <div class="container flex flex-col md:flex-row items-start md:items-center justify-between space-y-3 md:space-y-0">
+                    <!-- PreTitle -->
+                    <div class="text-xl text-slate-800 font-semibold">
+                        {{ $preTitle ?? '' }}
+                    </div>
+                    <!-- Page Actions -->
+                    <div class="flex items-center">
+                        @stack('page-actions')
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="page-body container ml-[2rem] `">
-            @yield('content')
-            
+            <!-- Content -->
+            <div class="page-body container">
+                <div class="flex flex-col">
+                    @yield('content')
+                </div>
+            </div>
         </div>
     </div>
 </body>

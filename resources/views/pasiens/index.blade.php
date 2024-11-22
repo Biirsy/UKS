@@ -5,11 +5,12 @@
 @endphp
 
 @push('page-actions')
-        <a href="{{ route('pasien.create') }}">
-            <button class="rounded transition ease-in-out delay-50 bg-[#B8001F] hover:bg-[#9E0029] text-sm text-white px-4 py-2 font-medium">Tambah Pasien</button>
-        </a>
+    <a href="{{ route('pasien.create') }}">
+        <button class="rounded transition ease-in-out delay-50 bg-[#B8001F] hover:bg-[#9E0029] text-white px-3 py-2 font-medium text-sm">
+            Tambah Pasien
+        </button>
+    </a>
 @endpush
-
 <style>
     .modal {
         display: none;
@@ -80,39 +81,40 @@
                 </form>
             </div>
         </div>
-        <div class="tableContainer">
-    <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow">
+        <div class="table-container overflow-x-auto"> <!-- Menambahkan overflow agar tabel responsif -->
+    <!-- Tabel -->
+    <table class="w-full border text-sm bg-white rounded-lg shadow">
         <thead>
-            <tr class="bg-gray-100 border-black">
-                <th class="px-6 py-3 text-left text-gray-600 font-medium">Nama Pasien</th>
-                <th class="px-6 py-3 text-left text-gray-600 font-medium">Kelas</th>
-                <th class="px-6 py-3 text-left text-gray-600 font-medium">Keluhan</th>
-                <th class="px-6 py-3 text-left text-gray-600 font-medium">Obat</th>
-                <th class="px-6 py-3 text-left text-gray-600 font-medium">Keterangan</th>
-                <th class="px-6 py-3 text-left text-gray-600 font-medium">Tanggal Berkunjung</th>
-                <th class="px-6 py-3 text-left text-gray-600 font-medium w-1">Aksi</th>
+            <tr class="bg-gray-100 text-left text-gray-600 font-semibold">
+                <th class="px-6 py-3">Nama Pasien</th>
+                <th class="px-6 py-3">Kelas</th>
+                <th class="px-6 py-3">Keluhan</th>
+                <th class="px-6 py-3">Obat</th>
+                <th class="px-6 py-3">Keterangan</th>
+                <th class="px-6 py-3">Tanggal Berkunjung</th>
+                <th class="px-6 py-3">Aksi</th>
             </tr>
         </thead>
-        <tbody id="patientTableBody" class="divide-y divide-gray-200">
+        <tbody class="divide-y divide-gray-200">
             @foreach ($pasiens as $pasien)
-            <tr>
-                <td class="px-6 py-4 text-gray-700">{{ $pasien->nama }}</td>
-                <td class="px-6 py-4 text-gray-700">{{ $pasien->kelasName->kelas }}</td>
-                <td class="px-6 py-4 text-gray-700">{{ $pasien->keluhan }}</td>
-                <td class="px-6 py-4 text-gray-700">
-                    {{ $pasien->obatName ? $pasien->obatName->nama_obat : 'Tidak Pakai Obat' }}
-                </td>
-                <td class="px-6 py-4 text-gray-700">{{ $pasien->keteranganName->keterangan }}</td>
-                <td class="px-6 py-4 text-gray-700">{{ $pasien->tanggal_berkunjung }}</td>
-                <td class="px-6 py-4 text-gray-700 flex space-x-2">
-                    <a href="{{ route('pasien.edit', $pasien->id) }}" class="transition ease-in-out delay-50 text-blue-500 hover: text-blue-700">Edit</a>
-                    <form action="{{ route('pasien.destroy', $pasien->id) }}" method="POST" class="inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="transition ease-in-out delay-50 text-red-500 hover: text-red-600">Delete</button>
-                    </form>
-                </td>
-            </tr>
+                <tr>
+                    <td class="px-6 py-4">{{ $pasien->nama }}</td>
+                    <td class="px-6 py-4">{{ $pasien->kelasName->kelas }}</td>
+                    <td class="px-6 py-4">{{ $pasien->keluhan }}</td>
+                    <td class="px-6 py-4">
+                        {{ $pasien->obatName ? $pasien->obatName->nama_obat : 'Tidak Pakai Obat' }}
+                    </td>
+                    <td class="px-6 py-4">{{ $pasien->keteranganName->keterangan }}</td>
+                    <td class="px-6 py-4">{{ $pasien->tanggal_berkunjung }}</td>
+                    <td class="px-6 py-4 flex space-x-2">
+                        <a href="{{ route('pasien.edit', $pasien->id) }}" class="transition ease-in-out delay-50 text-blue-500 hover:text-blue-600">Edit</a>
+                        <form action="{{ route('pasien.destroy', $pasien->id) }}" method="POST" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="transition ease-in-out delay-50 text-red-500 hover:text-red-600">Delete</button>
+                        </form>
+                    </td>
+                </tr>
             @endforeach
         </tbody>
     </table>
