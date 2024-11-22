@@ -7,10 +7,21 @@ use Illuminate\Http\Request;
 
 class ObatController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $obats = Obat::all();
-        return view('obats.index', compact('obats'));
+        $query = Obat::query();
+
+    if ($request->kadaluarsa) {
+        $query->where('kadaluarsa', '=', $request->kadaluarsa);
+    }
+
+    if ($request->search) {
+        $query->where('nama_obat', 'like', '%' . $request->search . '%');
+    }
+
+    $obats = $query->paginate(7);
+
+    return view('obats.index', compact('obats'));
     }
 
     public function create()

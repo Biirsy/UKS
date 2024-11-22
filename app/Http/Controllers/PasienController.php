@@ -26,7 +26,7 @@ class PasienController extends Controller
         $query->where('nama', 'like', '%' . $request->search . '%');
     }
 
-    $pasiens = $query->paginate(3);
+    $pasiens = $query->paginate(7);
     $obats = Obat::get();
     $kelas = Kelas::get();
     $keterangans = Keterangan::get();
@@ -107,8 +107,8 @@ class PasienController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        $this->validate($request, [
+{
+    $this->validate($request, [
         'nama' => ['required'],
         'kelas_id' => ['required'],
         'keluhan' => ['required'],
@@ -122,22 +122,44 @@ class PasienController extends Controller
         'keterangan_id.required' => 'Kolom Keterangan Tidak Boleh Kosong',
         'tanggal_berkunjung.required' => 'Kolom Tanggal Tidak Boleh Kosong',
     ]);
-        
-        $pasiens = Pasien::find($id);
 
-        $pasiens->nama = $request->nama;
-        $pasiens->kelas_id = $request->kelas_id;
-        $pasiens->keluhan = $request->keluhan;
-        $pasiens->obat_id = $request->obat_id;
-        $pasiens->keterangan_id = $request->keterangan_id;
-        $pasiens->tanggal_berkunjung = $request->tanggal_berkunjung;
+    $pasiens = Pasien::find($id);
 
-        $pasiens->save();
+    // Ambil data obat lama sebelum perubahan
+    $obatLama = $pasiens->obat_id ? Obat::find($pasiens->obat_id) : null;
 
-        session()->flash('info', 'Data Berhasil Diperbarui');
-
-        return redirect()->route('pasien.index');
+    // Kembalikan stok obat lama jika ada
+    if ($obatLama) {
+        $obatLama->stok += 1;
+        $obatLama->save();
     }
+
+    // Kurangi stok obat baru jika ada
+    $obatBaru = $request->obat_id ? Obat::find($request->obat_id) : null;
+    if ($obatBaru) {
+        if ($obatBaru->stok > 0) {
+            $obatBaru->stok -= 1;
+            $obatBaru->save();
+        } else {
+            return redirect()->back()->withErrors(['error' => 'Stok obat tidak mencukupi.']);
+        }
+    }
+
+    // Update data pasien
+    $pasiens->nama = $request->nama;
+    $pasiens->kelas_id = $request->kelas_id;
+    $pasiens->keluhan = $request->keluhan;
+    $pasiens->obat_id = $request->obat_id;
+    $pasiens->keterangan_id = $request->keterangan_id;
+    $pasiens->tanggal_berkunjung = $request->tanggal_berkunjung;
+
+    $pasiens->save();
+
+    session()->flash('info', 'Data Berhasil Diperbarui');
+
+    return redirect()->route('pasien.index');
+}
+
 
     public function destroy($id)
     {

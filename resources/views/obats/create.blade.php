@@ -1,49 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Obat</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class="bg-[#FCFAEE]">
-    <div class="container mx-auto p-6">
-        <h1 class="text-3xl font-bold text-[#B8001F] mb-4">Tambah Obat</h1>
+@extends('template.default')
 
-        @if ($errors->any())
-            <div class="mt-4 bg-red-200 text-red-800 p-2 rounded">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <form action="{{ route('obat.store') }}" method="POST" class="bg-white p-6 rounded shadow-md">
+@section('content')
+<div class="max-w-2xl mx-auto mt-5 bg-white shadow-md rounded-lg">
+    <div class="p-6">
+        <form action="{{ route('obat.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-4">
-                <label for="nama_obat" class="block text-gray-700">Nama Obat:</label>
-                <input type="text" id="nama_obat" name="nama_obat" required class="mt-1 block w-full border border-gray-300 rounded p-2" placeholder="Masukkan nama obat">
+                <label for="nama_obat" class="block text-gray-700 font-semibold mb-2">Nama Obat</label>
+                <input type="text" name="nama_obat" class="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-4 focus:ring-blue-200 transition duration-300 @error('nama_obat') @enderror" placeholder="Masukkan Nama Obat" value="{{ old('nama_obat') }}" required>
+                @error('nama_obat')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
             </div>
+            
             <div class="mb-4">
-                <label for="kegunaan" class="block text-gray-700">Kegunaan:</label>
-                <input type="text" id="kegunaan" name="kegunaan" required class="mt-1 block w-full border border-gray-300 rounded p-2" placeholder="Masukkan kegunaan obat">
+                <label for="kegunaan" class="block text-gray-700 font-semibold mb-2">Kegunaan</label>
+                <input type="text" name="kegunaan" class="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-4 focus:ring-blue-200 transition duration-300 @error('kegunaan')  @enderror" placeholder="Masukkan Kegunaan" value="{{ old('kegunaan') }}" required>
+                @error('kegunaan')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
             </div>
+
             <div class="mb-4">
-                <label for="stok" class="block text-gray-700">Stok:</label>
-                <input type="number" id="stok" name="stok" required class="mt-1 block w-full border border-gray-300 rounded p-2" placeholder="Masukkan stok obat">
+                <label for="stok" class="block text-gray-700 font-semibold mb-2">Stok</label>
+                <input type="number" name="stok" class="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-4 focus:ring-blue-200 transition duration-300 @error('stok')  @enderror" placeholder="Masukkan Stok" value="{{ old('stok') }}" required>
+                @error('stok')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
             </div>
+
             <div class="mb-4">
-                <label for="kadaluarsa" class="block text-gray-700">Kadaluarsa:</label>
-                <input type="date" id="kadaluarsa" name="kadaluarsa" required class="mt-1 block w-full border border-gray-300 rounded p-2">
+                <label for="kadaluarsa" class="block text-gray-700 font-semibold mb-2">Tanggal Kadaluarsa</label>
+                <input type="date" name="kadaluarsa" class="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-4 focus:ring-blue-200 transition duration-300" value="{{ old('kadaluarsa') }}" required>
             </div>
-            <div>
-                <button type="submit" class="bg-black text-white px-4 py-2 rounded hover:bg-[#A7001A]">Simpan</button>
+            <div class="flex justify-end gap-4">
+                <button type="submit" class="rounded transition ease-in-out delay-50 bg-[#B8001F] hover:bg-[#9E0029] text-sm text-white px-4 py-2 ">
+                    Tambah
+                </button>
+                <button type="button" onclick="window.location='{{ route('obat.index') }}'" class="rounded transition ease-in-out delay-50 bg-gray-500 text-white px-4 py-2 text-sm text-white rounded hover:bg-gray-600">
+                    Kembali
+                </button>
             </div>
         </form>
-
-        <a href="{{ route('obat.index') }}" class="mt-4 inline-block text-blue-500 hover:underline">Kembali ke Daftar Obat</a>
     </div>
-</body>
-</html>
+</div>
+@endsection

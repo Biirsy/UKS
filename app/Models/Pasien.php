@@ -20,6 +20,11 @@ class Pasien extends Model
         'tanggal_berkunjung'
     ];    
 
+    public function setNamaAttribute($value)
+    {
+        $this->attributes['nama'] = ucwords(strtolower($value));
+    }
+
     public function obatName()
     {
         return $this->belongsTo(Obat::class, 'obat_id');

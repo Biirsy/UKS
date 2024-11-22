@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama');
             $table->foreignId('kelas_id')->constrained();
             $table->string('keluhan');
-            $table->foreignId('obat_id')->constrained();
+            $table->foreignId('obat_id')->nullable()->constrained();
             $table->foreignId('keterangan_id')->constrained();
             $table->date('tanggal_berkunjung');
             $table->timestamps();
